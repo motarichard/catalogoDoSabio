@@ -1,0 +1,58 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /catalogoDoSabio
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+
+spring:
+  application:
+    name: "catalogoDoSabio"
+
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  sleuth:
+    sampler:
+      probability: 1.0
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+  data:
+    jdbc:
+      dialect: postgresql
+    redis:
+      host: redis-cache
+  cache:
+    type: redis
+    redis:
+      time-to-live: 60000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    show-details: always
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %X{traceId} - [%level] - %msg%n"
+
+auth:
+  user: admin
+  pass: admin

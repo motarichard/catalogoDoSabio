@@ -1,8 +1,7 @@
 package com.br.catalogoDoSabio.application.service.impl;
 
-import com.br.catalogoDoSabio.application.service.impl.BookServiceImpl;
-import com.br.catalogoDoSabio.domain.entity.BookDAO;
 import com.br.catalogoDoSabio.application.dto.BookDTO;
+import com.br.catalogoDoSabio.domain.entity.BookDAO;
 import com.br.catalogoDoSabio.domain.repository.BookRepository;
 import com.br.catalogoDoSabio.mapper.BookMapper;
 import jakarta.ws.rs.NotFoundException;
@@ -46,7 +45,6 @@ public class BookServiceImplTest {
 
     @Test
     void testFindAllBooks() {
-        // Mock do método estático dentro de cada teste específico
         try (MockedStatic<BookMapper> mockedStatic = mockStatic(BookMapper.class)) {
             mockedStatic.when(() -> BookMapper.daoToResponseDto(bookDAO)).thenReturn(bookDTO);
 
@@ -64,7 +62,6 @@ public class BookServiceImplTest {
 
     @Test
     void testGetBookById_WhenBookExists() {
-        // Mock do método estático dentro de cada teste específico
         try (MockedStatic<BookMapper> mockedStatic = mockStatic(BookMapper.class)) {
             mockedStatic.when(() -> BookMapper.daoToResponseDto(bookDAO)).thenReturn(bookDTO);
 
@@ -81,7 +78,6 @@ public class BookServiceImplTest {
 
     @Test
     void testGetBookById_WhenBookDoesNotExist() {
-        // Mock do método estático dentro de cada teste específico
         try (MockedStatic<BookMapper> mockedStatic = mockStatic(BookMapper.class)) {
             mockedStatic.when(() -> BookMapper.daoToResponseDto(bookDAO)).thenReturn(bookDTO);
 
@@ -96,7 +92,6 @@ public class BookServiceImplTest {
 
     @Test
     void testGetBooksByGenre() {
-        // Mock do método estático dentro de cada teste específico
         try (MockedStatic<BookMapper> mockedStatic = mockStatic(BookMapper.class)) {
             mockedStatic.when(() -> BookMapper.daoToResponseDto(bookDAO)).thenReturn(bookDTO);
 
@@ -114,7 +109,6 @@ public class BookServiceImplTest {
 
     @Test
     void testGetBooksByAuthor() {
-        // Mock do método estático dentro de cada teste específico
         try (MockedStatic<BookMapper> mockedStatic = mockStatic(BookMapper.class)) {
             mockedStatic.when(() -> BookMapper.daoToResponseDto(bookDAO)).thenReturn(bookDTO);
 

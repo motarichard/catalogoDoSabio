@@ -1,7 +1,6 @@
 package com.br.catalogoDoSabio.web.handler;
 
 import com.br.catalogoDoSabio.application.dto.ErrorDTO;
-import com.br.catalogoDoSabio.web.handler.DefaultApplicationExceptionHandler;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;

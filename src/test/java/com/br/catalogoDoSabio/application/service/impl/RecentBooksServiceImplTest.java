@@ -1,6 +1,5 @@
 package com.br.catalogoDoSabio.application.service.impl;
 
-import com.br.catalogoDoSabio.application.service.impl.RecentBooksServiceImpl;
 import com.br.catalogoDoSabio.application.dto.BookDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,24 +31,20 @@ public class RecentBooksServiceImplTest {
 
     @Test
     void testAddBookToRecent() {
-        // Setup: Criar um objeto BookDTO
         BookDTO bookDTO = new BookDTO();
         bookDTO.setId(1L);
         bookDTO.setTitle("Test Book");
         bookDTO.setAuthor("Test Author");
         bookDTO.setGenre("Test Genre");
 
-        // Action: Chamar o método addBookToRecent
         recentBooksService.addBookToRecent(bookDTO);
 
-        // Assert: Verificar se os métodos do RedisTemplate foram chamados corretamente
         verify(listOperations, times(1)).leftPush("recent_books", bookDTO);
         verify(listOperations, times(1)).trim("recent_books", 0, 9);
     }
 
     @Test
     void testGetRecentBooks() {
-        // Setup: Criar uma lista de BookDTO
         BookDTO bookDTO1 = new BookDTO();
         bookDTO1.setId(1L);
         bookDTO1.setTitle("Recent Book 1");
@@ -64,13 +59,10 @@ public class RecentBooksServiceImplTest {
 
         List<BookDTO> recentBooks = List.of(bookDTO1, bookDTO2);
 
-        // Setup do mock para retornar a lista de livros recentes
         when(listOperations.range("recent_books", 0, -1)).thenReturn(recentBooks);
 
-        // Action: Chamar o método getRecentBooks
         List<BookDTO> result = recentBooksService.getRecentBooks();
 
-        // Assert: Verificar se o resultado é o esperado
         assertNotNull(result);
         assertEquals(2, result.size());
         assertEquals(bookDTO1, result.get(0));

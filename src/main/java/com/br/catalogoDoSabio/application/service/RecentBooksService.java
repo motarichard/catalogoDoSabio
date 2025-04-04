@@ -7,4 +7,6 @@ import java.util.List;
 public interface RecentBooksService {
 
     List<BookDTO> getRecentBooks();
+
+    void addBookToRecent(BookDTO bookDTO);
 }

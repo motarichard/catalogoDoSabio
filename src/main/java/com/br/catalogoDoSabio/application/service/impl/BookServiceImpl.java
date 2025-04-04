@@ -1,6 +1,6 @@
 package com.br.catalogoDoSabio.application.service.impl;
 
-import com.br.catalogoDoSabio.domain.entity.BookDAO;
+import com.br.catalogoDoSabio.domain.entity.Book;
 import com.br.catalogoDoSabio.application.dto.BookDTO;
 import com.br.catalogoDoSabio.domain.repository.BookRepository;
 import com.br.catalogoDoSabio.mapper.BookMapper;
@@ -25,7 +25,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @Cacheable(value = "books", keyGenerator = "keyGenerator", unless = "#result == null or #result.empty")
     public Page<BookDTO> findAllBooks(Pageable pageable) {
-        Page<BookDAO> daoPage = repository.findAll(pageable);
+        Page<Book> daoPage = repository.findAll(pageable);
         List<BookDTO> responseDTO = new ArrayList<>();
         daoPage.forEach(bookDAO -> responseDTO.add(BookMapper.daoToResponseDto(bookDAO)));
         return new PageImpl<>(responseDTO, pageable, daoPage.getTotalElements());
@@ -34,15 +34,15 @@ public class BookServiceImpl implements BookService {
     @Override
     @Cacheable(value = "bookById", key = "#id", unless = "#result == null")
     public BookDTO getBookById(Long id) {
-        BookDAO bookDAO = repository.findById(id)
+        Book book = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Book id not found"));
-        return BookMapper.daoToResponseDto(bookDAO);
+        return BookMapper.daoToResponseDto(book);
     }
 
     @Override
     @Cacheable(value = "booksByGenre", key = "#genre", unless = "#result == null or #result.empty")
     public List<BookDTO> getBooksByGenre(String genre) {
-        List<BookDAO> daoList = repository.findByGenre(genre);
+        List<Book> daoList = repository.findByGenre(genre);
         verifyListNotEmpty(daoList);
         List<BookDTO> responseDTO = new ArrayList<>();
         daoList.forEach(bookDAO -> responseDTO.add(BookMapper.daoToResponseDto(bookDAO)));
@@ -52,14 +52,14 @@ public class BookServiceImpl implements BookService {
     @Override
     @Cacheable(value = "booksByAuthor", key = "#author", unless = "#result == null or #result.empty")
     public List<BookDTO> getBooksByAuthor(String author) {
-        List<BookDAO> daoList = repository.findByAuthor(author);
+        List<Book> daoList = repository.findByAuthor(author);
         verifyListNotEmpty(daoList);
         List<BookDTO> responseDTO = new ArrayList<>();
         daoList.forEach(bookDAO -> responseDTO.add(BookMapper.daoToResponseDto(bookDAO)));
         return responseDTO;
     }
 
-    private void verifyListNotEmpty(List<BookDAO> books) {
+    private void verifyListNotEmpty(List<Book> books) {
         if (books.isEmpty()) {
             throw new NotFoundException("Book id not found");
         }

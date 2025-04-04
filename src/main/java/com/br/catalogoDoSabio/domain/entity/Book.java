@@ -11,7 +11,7 @@ import lombok.*;
 @Setter
 @ToString
 @Builder
-public class BookDAO {
+public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

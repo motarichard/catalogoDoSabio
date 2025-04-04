@@ -1,18 +1,18 @@
 package com.br.catalogoDoSabio.mapper;
 
 
-import com.br.catalogoDoSabio.domain.entity.BookDAO;
+import com.br.catalogoDoSabio.domain.entity.Book;
 import com.br.catalogoDoSabio.application.dto.BookDTO;
 
 public class BookMapper {
 
-    public static BookDTO daoToResponseDto(BookDAO bookDAO) {
+    public static BookDTO daoToResponseDto(Book book) {
         BookDTO dto = new BookDTO();
-        dto.setId(bookDAO.getId());
-        dto.setTitle(bookDAO.getTitle());
-        dto.setDescription(bookDAO.getDescription());
-        dto.setGenre(bookDAO.getGenre());
-        dto.setAuthor(bookDAO.getAuthor());
+        dto.setId(book.getId());
+        dto.setTitle(book.getTitle());
+        dto.setDescription(book.getDescription());
+        dto.setGenre(book.getGenre());
+        dto.setAuthor(book.getAuthor());
         return dto;
     }
 }

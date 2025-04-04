@@ -1,7 +1,7 @@
 package com.br.catalogoDoSabio.application.service.impl;
 
 import com.br.catalogoDoSabio.application.dto.BookDTO;
-import com.br.catalogoDoSabio.domain.entity.BookDAO;
+import com.br.catalogoDoSabio.domain.entity.Book;
 import com.br.catalogoDoSabio.domain.repository.BookRepository;
 import com.br.catalogoDoSabio.mapper.BookMapper;
 import jakarta.ws.rs.NotFoundException;
@@ -33,12 +33,12 @@ public class BookServiceImplTest {
     @InjectMocks
     private BookServiceImpl bookService;
 
-    private BookDAO bookDAO;
+    private Book book;
     private BookDTO bookDTO;
 
     @BeforeEach
     void setUp() {
-        bookDAO = new BookDAO(1L, "Book Title", "Author Name", "Genre Name", "Book Description");
+        book = new Book(1L, "Book Title", "Author Name", "Genre Name", "Book Description");
         bookDTO = new BookDTO(1L, "Book Title", "Author Name", "Genre Name", "Book Description");
 
     }
@@ -46,10 +46,10 @@ public class BookServiceImplTest {
     @Test
     void testFindAllBooks() {
         try (MockedStatic<BookMapper> mockedStatic = mockStatic(BookMapper.class)) {
-            mockedStatic.when(() -> BookMapper.daoToResponseDto(bookDAO)).thenReturn(bookDTO);
+            mockedStatic.when(() -> BookMapper.daoToResponseDto(book)).thenReturn(bookDTO);
 
             Pageable pageable = PageRequest.of(0, 10);
-            Page<BookDAO> pageMock = new PageImpl<>(Arrays.asList(bookDAO), pageable, 1);
+            Page<Book> pageMock = new PageImpl<>(Arrays.asList(book), pageable, 1);
             when(bookRepository.findAll(pageable)).thenReturn(pageMock);
 
             Page<BookDTO> result = bookService.findAllBooks(pageable);
@@ -63,10 +63,10 @@ public class BookServiceImplTest {
     @Test
     void testGetBookById_WhenBookExists() {
         try (MockedStatic<BookMapper> mockedStatic = mockStatic(BookMapper.class)) {
-            mockedStatic.when(() -> BookMapper.daoToResponseDto(bookDAO)).thenReturn(bookDTO);
+            mockedStatic.when(() -> BookMapper.daoToResponseDto(book)).thenReturn(bookDTO);
 
             Long bookId = 1L;
-            when(bookRepository.findById(bookId)).thenReturn(Optional.of(bookDAO));
+            when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
 
             BookDTO result = bookService.getBookById(bookId);
 
@@ -79,7 +79,7 @@ public class BookServiceImplTest {
     @Test
     void testGetBookById_WhenBookDoesNotExist() {
         try (MockedStatic<BookMapper> mockedStatic = mockStatic(BookMapper.class)) {
-            mockedStatic.when(() -> BookMapper.daoToResponseDto(bookDAO)).thenReturn(bookDTO);
+            mockedStatic.when(() -> BookMapper.daoToResponseDto(book)).thenReturn(bookDTO);
 
             Long bookId = 999L;
             when(bookRepository.findById(bookId)).thenReturn(Optional.empty());
@@ -93,10 +93,10 @@ public class BookServiceImplTest {
     @Test
     void testGetBooksByGenre() {
         try (MockedStatic<BookMapper> mockedStatic = mockStatic(BookMapper.class)) {
-            mockedStatic.when(() -> BookMapper.daoToResponseDto(bookDAO)).thenReturn(bookDTO);
+            mockedStatic.when(() -> BookMapper.daoToResponseDto(book)).thenReturn(bookDTO);
 
             String genre = "Genre Name";
-            List<BookDAO> daoList = Arrays.asList(bookDAO);
+            List<Book> daoList = Arrays.asList(book);
             when(bookRepository.findByGenre(genre)).thenReturn(daoList);
 
             List<BookDTO> result = bookService.getBooksByGenre(genre);
@@ -110,10 +110,10 @@ public class BookServiceImplTest {
     @Test
     void testGetBooksByAuthor() {
         try (MockedStatic<BookMapper> mockedStatic = mockStatic(BookMapper.class)) {
-            mockedStatic.when(() -> BookMapper.daoToResponseDto(bookDAO)).thenReturn(bookDTO);
+            mockedStatic.when(() -> BookMapper.daoToResponseDto(book)).thenReturn(bookDTO);
 
             String author = "Author Name";
-            List<BookDAO> daoList = Arrays.asList(bookDAO);
+            List<Book> daoList = Arrays.asList(book);
             when(bookRepository.findByAuthor(author)).thenReturn(daoList);
 
             List<BookDTO> result = bookService.getBooksByAuthor(author);

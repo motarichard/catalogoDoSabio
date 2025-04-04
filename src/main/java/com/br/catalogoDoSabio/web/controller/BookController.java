@@ -1,6 +1,8 @@
 package com.br.catalogoDoSabio.web.controller;
 
 import com.br.catalogoDoSabio.application.dto.BookDTO;
+import com.br.catalogoDoSabio.application.service.BookService;
+import com.br.catalogoDoSabio.application.service.RecentBooksService;
 import com.br.catalogoDoSabio.application.service.impl.BookServiceImpl;
 import com.br.catalogoDoSabio.application.service.impl.RecentBooksServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,10 +27,10 @@ import java.util.List;
 public class BookController {
 
     @Autowired
-    private BookServiceImpl bookService;
+    private BookService bookService;
 
     @Autowired
-    private RecentBooksServiceImpl recentBooksService;
+    private RecentBooksService recentBooksService;
 
     @GetMapping
     @Operation(summary = "Find all books")

@@ -18,6 +18,7 @@ public class RecentBooksServiceImpl implements RecentBooksService {
     @Autowired
     private RedisTemplate<String, BookDTO> redisTemplate;
 
+    @Override
     public void addBookToRecent(BookDTO bookDTO) {
         log.info("Add the book to Redis (in the 'recent_books' key)");
         redisTemplate.opsForList().leftPush(RECENT_BOOKS_KEY, bookDTO);
